@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc"
+    "dev": "tsc",
+    "tsc": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
