@@ -78,6 +78,7 @@ export class AuthGuard implements CanActivate {
     const roles: Role[] = []
 
     const [admin] = await Promise.all(rolePromises)
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     admin && roles.push('admin')
 
     return roles

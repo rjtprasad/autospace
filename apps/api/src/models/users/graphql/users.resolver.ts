@@ -11,13 +11,16 @@ import { PrismaService } from 'src/common/prisma/prisma.service'
 
 @Resolver(() => User)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService,
-    private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => User)
-  createUser(@Args('createUserInput') args: CreateUserInput, 
-  @GetUser() user: GetUserType
+  createUser(
+    @Args('createUserInput') args: CreateUserInput,
+    @GetUser() user: GetUserType,
   ) {
     checkRowLevelPermission(user, args.uid)
     return this.usersService.create(args)
@@ -35,15 +38,23 @@ export class UsersResolver {
 
   @AllowAuthenticated()
   @Mutation(() => User)
-  async updateUser(@Args('updateUserInput') args: UpdateUserInput, @GetUser() user: GetUserType) {
-    const userInfo = await this.prisma.user.findUnique({ where: { uid: args.uid } })
+  async updateUser(
+    @Args('updateUserInput') args: UpdateUserInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const userInfo = await this.prisma.user.findUnique({
+      where: { uid: args.uid },
+    })
     checkRowLevelPermission(user, userInfo.uid)
     return this.usersService.update(args)
   }
 
   @AllowAuthenticated()
   @Mutation(() => User)
-  async removeUser(@Args() args: FindUniqueUserArgs, @GetUser() user: GetUserType) {
+  async removeUser(
+    @Args() args: FindUniqueUserArgs,
+    @GetUser() user: GetUserType,
+  ) {
     const userInfo = await this.prisma.user.findUnique(args)
     checkRowLevelPermission(user, userInfo.uid)
     return this.usersService.remove(args)

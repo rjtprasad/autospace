@@ -5,4 +5,3 @@ import { User } from '@prisma/client'
 export class UpdateUser extends PartialType(CreateUser) {
   uid: User['uid']
 }
-
