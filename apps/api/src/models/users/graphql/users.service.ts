@@ -1,10 +1,19 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { FindManyUserArgs, FindUniqueUserArgs } from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
-import {LoginInput, LoginOutput, RegisterWithCredentialsInput, RegisterWithProviderInput } from './dtos/create-user.input'
+import {
+  LoginInput,
+  LoginOutput,
+  RegisterWithCredentialsInput,
+  RegisterWithProviderInput,
+} from './dtos/create-user.input'
 import { UpdateUserInput } from './dtos/update-user.input'
 import * as bcrypt from 'bcryptjs'
-import {v4 as uuid} from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
@@ -12,29 +21,32 @@ export class UsersService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
-  ){}
-    registerWithProvider({image, name, uid, type}: RegisterWithProviderInput){
-      return this.prisma.user.create({
-        data: {
-          uid,
-          name,
-          image,
-          AuthProvider: {
-            create: {
-              type,
-            }
-          }
-        }
-      })
+  ) {}
+  registerWithProvider({ image, name, uid, type }: RegisterWithProviderInput) {
+    return this.prisma.user.create({
+      data: {
+        uid,
+        name,
+        image,
+        AuthProvider: {
+          create: {
+            type,
+          },
+        },
+      },
+    })
   }
 
   async registerWithCredentials({
-    email, name, password, image
-  } : RegisterWithCredentialsInput){
+    email,
+    name,
+    password,
+    image,
+  }: RegisterWithCredentialsInput) {
     const existingUser = await this.prisma.credentials.findUnique({
-      where: {email},
+      where: { email },
     })
-    if (existingUser){
+    if (existingUser) {
       throw new BadRequestException('User already exists with this email.')
     }
 
@@ -46,11 +58,14 @@ export class UsersService {
     const uid = uuid()
 
     return this.prisma.user.create({
-      data:{
-        uid, name, image, 
+      data: {
+        uid,
+        name,
+        image,
         Credentials: {
           create: {
-            email, passwordHash,
+            email,
+            passwordHash,
           },
         },
         AuthProvider: {
@@ -59,9 +74,9 @@ export class UsersService {
           },
         },
       },
-      include:{
+      include: {
         Credentials: true,
-      }
+      },
     })
   }
 
@@ -118,5 +133,3 @@ export class UsersService {
     return this.prisma.user.delete(args)
   }
 }
-
-

@@ -38,12 +38,16 @@ export class AuthGuard implements CanActivate {
     try {
       const payload = await this.jwtService.verify(token)
       const uid = payload.uid
-      if (!uid){
-        throw new UnauthorizedException('Invalid token. No uid present in the token.')
+      if (!uid) {
+        throw new UnauthorizedException(
+          'Invalid token. No uid present in the token.',
+        )
       }
-      const user = await this.prisma.user.findUnique({where: {uid}})
-      if (!user){
-        throw new UnauthorizedException('Invalid token. No user present present with the uid.')
+      const user = await this.prisma.user.findUnique({ where: { uid } })
+      if (!user) {
+        throw new UnauthorizedException(
+          'Invalid token. No user present present with the uid.',
+        )
       }
 
       req.user = payload
@@ -88,7 +92,7 @@ export class AuthGuard implements CanActivate {
     const roles: Role[] = []
 
     const [admin] = await Promise.all(rolePromises)
-    
+
     admin && roles.push('admin')
 
     return roles

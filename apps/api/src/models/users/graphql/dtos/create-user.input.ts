@@ -8,7 +8,6 @@ import {
 import { User } from '../entity/user.entity'
 import { AuthProviderType } from '@prisma/client'
 
-
 registerEnumType(AuthProviderType, {
   name: 'AuthProviderType',
 })
