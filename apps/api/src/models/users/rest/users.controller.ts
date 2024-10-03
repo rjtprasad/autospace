@@ -47,7 +47,9 @@ export class UsersController {
       ...(skip ? { skip: +skip } : null),
       ...(take ? { take: +take } : null),
       ...(sortBy ? { orderBy: { [sortBy]: order || 'asc' } } : null),
-      ...(searchBy ? { where: { [searchBy]: { contains: search, mode: 'insensitive' } } } : null),
+      ...(searchBy
+        ? { where: { [searchBy]: { contains: search, mode: 'insensitive' } } }
+        : null),
     })
   }
 
