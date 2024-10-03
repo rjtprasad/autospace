@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.11.0",
-    "@autospace/sample-lib": "workspace:^",
+    "@autospace/sample-lib": "^1.0.0",
     "@nestjs/apollo": "^12.2.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.3",
@@ -60,7 +60,6 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.0",
     "ts-loader": "^9.4.3",
-    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.1.3"
   },
