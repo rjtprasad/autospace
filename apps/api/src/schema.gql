@@ -19,10 +19,18 @@ type LoginOutput {
   token: String!
 }
 
+type Admin {
+  uid: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Int, skip: Int): [User!]!
   user(where: UserWhereUniqueInput!): User!
+  admins(distinct: [AdminScalarFieldEnum!], where: AdminWhereInput, orderBy: [AdminOrderByWithRelationInput!], cursor: AdminWhereUniqueInput, take: Int, skip: Int): [Admin!]!
+  admin(where: AdminWhereUniqueInput!): Admin!
 }
 
 enum UserScalarFieldEnum {
@@ -89,12 +97,65 @@ input UserWhereUniqueInput {
   uid: String!
 }
 
+enum AdminScalarFieldEnum {
+  uid
+  createdAt
+  updatedAt
+}
+
+input AdminWhereInput {
+  uid: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  User: UserRelationFilter
+  Verifications: VerificationListRelationFilter
+  AND: [AdminWhereInput!]
+  OR: [AdminWhereInput!]
+  NOT: [AdminWhereInput!]
+}
+
+input UserRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
+input VerificationListRelationFilter {
+  every: VerificationWhereInput
+  some: VerificationWhereInput
+  none: VerificationWhereInput
+}
+
+input VerificationWhereInput {
+  AND: [VerificationWhereInput!]
+  OR: [VerificationWhereInput!]
+  NOT: [VerificationWhereInput!]
+}
+
+input AdminOrderByWithRelationInput {
+  uid: SortOrder
+  createdAt: SortOrder
+  updatedAt: SortOrder
+  User: UserOrderByWithRelationInput
+  Verifications: VerificationOrderByRelationAggregateInput
+}
+
+input VerificationOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input AdminWhereUniqueInput {
+  uid: String!
+}
+
 type Mutation {
   registerWithCredentials(registerWithCredentialsInput: RegisterWithCredentialsInput!): User!
   registerWithProvider(registerWithProviderInput: RegisterWithProviderInput!): User!
   login(loginInput: LoginInput!): LoginOutput!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(where: UserWhereUniqueInput!): User!
+  createAdmin(createAdminInput: CreateAdminInput!): Admin!
+  updateAdmin(updateAdminInput: UpdateAdminInput!): Admin!
+  removeAdmin(where: AdminWhereUniqueInput!): Admin!
 }
 
 input RegisterWithCredentialsInput {
@@ -122,5 +183,13 @@ input LoginInput {
 }
 
 input UpdateUserInput {
+  uid: String!
+}
+
+input CreateAdminInput {
+  uid: String!
+}
+
+input UpdateAdminInput {
   uid: String!
 }

@@ -22,6 +22,7 @@ export class UsersService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
   ) {}
+
   registerWithProvider({ image, name, uid, type }: RegisterWithProviderInput) {
     return this.prisma.user.create({
       data: {
