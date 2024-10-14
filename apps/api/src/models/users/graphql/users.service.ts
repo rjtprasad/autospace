@@ -110,7 +110,6 @@ export class UsersService {
         algorithm: 'HS256',
       },
     )
-
     return { token: jwtToken }
   }
 

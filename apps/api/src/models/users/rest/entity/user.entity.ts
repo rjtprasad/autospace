@@ -4,10 +4,10 @@ import { RestrictProperties } from 'src/common/dtos/common.input'
 
 export class UserEntity implements RestrictProperties<UserEntity, User> {
   uid: string
-  createdAt: Date
-  updatedAt: Date
   @IsOptional()
   name: string
+  createdAt: Date
+  updatedAt: Date
   @IsOptional()
   image: string
 }

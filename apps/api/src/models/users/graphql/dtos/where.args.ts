@@ -5,9 +5,6 @@ import {
   RestrictProperties,
   StringFilter,
 } from 'src/common/dtos/common.input'
-import { CustomerRelationFilter } from 'src/models/customers/graphql/dtos/where.args'
-import { ManagerRelationFilter } from 'src/models/managers/graphql/dtos/where.args'
-import { ValetRelationFilter } from 'src/models/valets/graphql/dtos/where.args'
 
 @InputType()
 export class UserWhereUniqueInput {
@@ -25,9 +22,6 @@ export class UserWhereInputStrict
       >
     >
 {
-  Manager: ManagerRelationFilter
-  Valet: ValetRelationFilter
-  Customer: CustomerRelationFilter
   uid: StringFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
