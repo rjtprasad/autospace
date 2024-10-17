@@ -24,6 +24,7 @@ model User {
 
     Credentials  Credentials?
     AuthProvider AuthProvider?
+
     Admin        Admin?
     Manager      Manager?
     Valet        Valet?

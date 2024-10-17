@@ -7,4 +7,3 @@ export class CreateManagerInput extends PickType(
   ['uid', 'displayName'],
   InputType,
 ) {}
-

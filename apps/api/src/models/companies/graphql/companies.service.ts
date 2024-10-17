@@ -7,15 +7,21 @@ import { UpdateCompanyInput } from './dtos/update-company.input'
 @Injectable()
 export class CompaniesService {
   constructor(private readonly prisma: PrismaService) {}
-  async create({description, displayName, managerId}: CreateCompanyInput) {
-    const manager = this.prisma.manager.findUnique({where: {uid: managerId}})
+  async create({ description, displayName, managerId }: CreateCompanyInput) {
+    const manager = this.prisma.manager.findUnique({
+      where: { uid: managerId },
+    })
     if (manager) {
       throw new BadRequestException(
-        'Manager is already a part of another company.'
+        'Manager is already a part of another company.',
       )
     }
     return this.prisma.company.create({
-      data: {description, displayName, Managers: {connect: {uid: managerId}}},
+      data: {
+        description,
+        displayName,
+        Managers: { connect: { uid: managerId } },
+      },
     })
   }
 

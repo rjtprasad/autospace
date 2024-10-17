@@ -8,6 +8,10 @@ type User {
   uid: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  admin: Admin
+  manager: Manager
+  valet: Valet
+  customer: Customer
 }
 
 """
@@ -23,13 +27,9 @@ type Admin {
   uid: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-}
-
-type Customer {
-  displayName: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  uid: String!
+  user: User
+  verifications: [Verification!]!
+  verificationsCount: Int!
 }
 
 type Manager {
@@ -38,6 +38,7 @@ type Manager {
   createdAt: DateTime!
   updatedAt: DateTime!
   companyId: Int!
+  company: Company
 }
 
 type Valet {
@@ -50,12 +51,13 @@ type Valet {
   licenceID: String!
 }
 
-type Company {
+type Customer {
   displayName: String
-  description: String
   createdAt: DateTime!
   updatedAt: DateTime!
-  id: Int!
+  uid: String!
+  user: User
+  bookings: [Booking!]!
 }
 
 type Verification {
@@ -64,6 +66,59 @@ type Verification {
   verified: Boolean!
   adminId: String!
   garageId: Int!
+}
+
+type Booking {
+  pricePerHour: Int
+  totalPrice: Int
+  phoneNumber: String
+  passcode: String
+  status: BookingStatus!
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  startTime: DateTime!
+  endTime: DateTime!
+  vehicleNumber: String!
+  slotId: Int!
+  customerId: String!
+  slot: Slot!
+  customer: Customer!
+  valetAssignment: ValetAssignment
+}
+
+enum BookingStatus {
+  BOOKED
+  VALET_ASSIGNED_FOR_CHECK_IN
+  VALET_PICKED_UP
+  CHECKED_IN
+  VALET_ASSIGNED_FOR_CHECK_OUT
+  CHECKED_OUT
+  VALET_RETURNED
+}
+
+type Company {
+  displayName: String
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: Int!
+  garages: [Garage!]!
+  managers: [Manager!]!
+}
+
+type Garage {
+  displayName: String
+  description: String
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  companyId: Int!
+  images: [String!]!
+  verification: Verification
+  company: Company!
+  address: Address
+  slots: [Slot!]!
 }
 
 type ValetAssignment {
@@ -76,6 +131,8 @@ type ValetAssignment {
   pickupLng: Int!
   pickupValetId: String!
   returnValetId: String!
+  pickupValet: Valet
+  returnValet: Valet
 }
 
 type Slot {
@@ -89,6 +146,8 @@ type Slot {
   id: Int!
   pricePerHour: Int!
   garageId: Int!
+  garage: Garage!
+  bookings: [Booking!]!
 }
 
 enum SlotType {
@@ -108,40 +167,15 @@ type Review {
   garageId: Int!
 }
 
-type Garage {
-  displayName: String
-  description: String
+type Address {
+  garageId: Int
   id: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
-  companyId: Int!
-  images: [String!]!
-}
-
-type Booking {
-  pricePerHour: Int
-  totalPrice: Int
-  phoneNumber: String
-  passcode: String
-  status: BookingStatus!
-  id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  startTime: DateTime!
-  endTime: DateTime!
-  vehicleNumber: String!
-  slotId: Int!
-  customerId: String!
-}
-
-enum BookingStatus {
-  BOOKED
-  VALET_ASSIGNED_FOR_CHECK_IN
-  VALET_PICKED_UP
-  CHECKED_IN
-  VALET_ASSIGNED_FOR_CHECK_OUT
-  CHECKED_OUT
-  VALET_RETURNED
+  address: String!
+  lat: Int!
+  lng: Int!
+  garage: Garage
 }
 
 type BookingTimeline {
@@ -151,16 +185,6 @@ type BookingTimeline {
   id: Int!
   bookingId: Int!
   timestamp: DateTime!
-}
-
-type Address {
-  garageId: Int
-  id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  address: String!
-  lat: Int!
-  lng: Int!
 }
 
 type Query {
