@@ -11,6 +11,7 @@ generator client {
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
+
 }
 
 model User {
@@ -24,9 +25,9 @@ model User {
     Credentials  Credentials?
     AuthProvider AuthProvider?
     Admin        Admin?
-    // Manager      Manager?
-    // Valet        Valet?
-    // Customer     Customer?
+    Manager      Manager?
+    Valet        Valet?
+    Customer     Customer?
 }
 
 model Credentials {
@@ -40,8 +41,8 @@ model Credentials {
 
 model AuthProvider {
     uid  String           @id
-    type AuthProviderType
     User User             @relation(fields: [uid], references: [uid])
+    type AuthProviderType
 }
 
 enum AuthProviderType {
@@ -54,218 +55,218 @@ model Admin {
     User          User            @relation(fields: [uid], references: [uid])
     createdAt     DateTime        @default(now())
     updatedAt     DateTime        @updatedAt
-    // Verifications Verification[]
+    Verifications Verification[]
 }
 
-// model Manager {
-//     uid  String @id
-//     User User   @relation(fields: [uid], references: [uid])
+model Manager {
+    uid  String @id
+    User User   @relation(fields: [uid], references: [uid])
 
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     displayName String?
+    displayName String?
 
-//     companyId       Int?              @unique
-//     Company         Company?          @relation(fields: [companyId], references: [id])
-//     BookingTimeline BookingTimeline[]
-// }
+    companyId       Int?              @unique
+    Company         Company?          @relation(fields: [companyId], references: [id])
+    BookingTimeline BookingTimeline[]
+}
 
-// model Valet {
-//     uid  String @id
-//     User User   @relation(fields: [uid], references: [uid])
+model Valet {
+    uid  String @id
+    User User   @relation(fields: [uid], references: [uid])
 
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     displayName String
-//     image       String?
-//     licenceID   String  @default("")
-//     companyId         Int?
-//     Company           Company?          @relation(fields: [companyId], references: [id])
-//     BookingTimeline   BookingTimeline[]
-//     PickupAssignments ValetAssignment[] @relation("PickupValet")
-//     ReturnAssignments ValetAssignment[] @relation("ReturnValet")
+    displayName String
+    image       String?
+    licenceID   String  @default("")
+    companyId         Int?
+    Company           Company?          @relation(fields: [companyId], references: [id])
+    BookingTimeline   BookingTimeline[]
+    PickupAssignments ValetAssignment[] @relation("PickupValet")
+    ReturnAssignments ValetAssignment[] @relation("ReturnValet")
 
-//     @@unique([companyId, uid])
-// }
+    @@unique([companyId, uid])
+}
 
-// model Customer {
-//     uid  String @id
-//     User User   @relation(fields: [uid], references: [uid])
+model Customer {
+    uid  String @id
+    User User   @relation(fields: [uid], references: [uid])
 
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     displayName String?
+    displayName String?
 
-//     Bookings Booking[]
-//     Reviews  Review[]
-// }
+    Bookings Booking[]
+    Reviews  Review[]
+}
 
-// model Company {
-//     id        Int      @id @default(autoincrement())
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+model Company {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     displayName String?
-//     description String?
+    displayName String?
+    description String?
 
-//     Garages  Garage[]
-//     Managers Manager[]
-//     Valets   Valet[]
-// }
+    Garages  Garage[]
+    Managers Manager[]
+    Valets   Valet[]
+}
 
-// model Garage {
-//     id        Int      @id @default(autoincrement())
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+model Garage {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     displayName String?
-//     description String?
-//     images      String[]
+    displayName String?
+    description String?
+    images      String[]
 
-//     companyId    Int
-//     Company      Company       @relation(fields: [companyId], references: [id])
-//     Address      Address?
-//     Verification Verification?
-//     Reviews      Review[]
-//     Slots        Slot[]
-// }
+    companyId    Int
+    Company      Company       @relation(fields: [companyId], references: [id])
+    Address      Address?
+    Verification Verification?
+    Reviews      Review[]
+    Slots        Slot[]
+}
 
-// model Address {
-//     id        Int      @id @default(autoincrement())
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+model Address {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     address String
-//     lat     Float
-//     lng     Float
+    address String
+    lat     Float
+    lng     Float
 
-//     garageId Int    @unique
-//     Garage   Garage @relation(fields: [garageId], references: [id])
-// }
+    garageId Int    @unique
+    Garage   Garage @relation(fields: [garageId], references: [id])
+}
 
-// model Slot {
-//     id        Int      @id @default(autoincrement())
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+model Slot {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     displayName  String?
-//     pricePerHour Float
+    displayName  String?
+    pricePerHour Float
 
-//     length Int?
-//     width  Int?
-//     height Int?
+    length Int?
+    width  Int?
+    height Int?
 
-//     type SlotType @default(CAR)
+    type SlotType @default(CAR)
 
-//     garageId Int
-//     Garage   Garage    @relation(fields: [garageId], references: [id])
-//     Bookings Booking[]
-// }
+    garageId Int
+    Garage   Garage    @relation(fields: [garageId], references: [id])
+    Bookings Booking[]
+}
 
-// enum SlotType {
-//     CAR
-//     HEAVY
-//     BIKE
-//     BICYCLE
-// }
+enum SlotType {
+    CAR
+    HEAVY
+    BIKE
+    BICYCLE
+}
 
-// model Booking {
-//     id        Int      @id @default(autoincrement())
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+model Booking {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     pricePerHour  Float?
-//     totalPrice    Float?
-//     startTime     DateTime
-//     endTime       DateTime
-//     vehicleNumber String
-//     phoneNumber   String?
-//     passcode      String?
-//     status        BookingStatus @default(BOOKED)
+    pricePerHour  Float?
+    totalPrice    Float?
+    startTime     DateTime
+    endTime       DateTime
+    vehicleNumber String
+    phoneNumber   String?
+    passcode      String?
+    status        BookingStatus @default(BOOKED)
 
-//     slotId Int
-//     Slot   Slot @relation(fields: [slotId], references: [id])
+    slotId Int
+    Slot   Slot @relation(fields: [slotId], references: [id])
 
-//     customerId String
-//     Customer   Customer @relation(fields: [customerId], references: [uid])
+    customerId String
+    Customer   Customer @relation(fields: [customerId], references: [uid])
 
-//     ValetAssignment ValetAssignment?
-//     BookingTimeline BookingTimeline[]
+    ValetAssignment ValetAssignment?
+    BookingTimeline BookingTimeline[]
 
-//     @@index([startTime, endTime])
-// }
+    @@index([startTime, endTime])
+}
 
-// enum BookingStatus {
-//     BOOKED
-//     VALET_ASSIGNED_FOR_CHECK_IN
-//     VALET_PICKED_UP
-//     CHECKED_IN
-//     VALET_ASSIGNED_FOR_CHECK_OUT
-//     CHECKED_OUT
-//     VALET_RETURNED
-// }
+enum BookingStatus {
+    BOOKED
+    VALET_ASSIGNED_FOR_CHECK_IN
+    VALET_PICKED_UP
+    CHECKED_IN
+    VALET_ASSIGNED_FOR_CHECK_OUT
+    CHECKED_OUT
+    VALET_RETURNED
+}
 
-// model ValetAssignment {
-//     bookingId Int      @id
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+model ValetAssignment {
+    bookingId Int      @id
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     pickupLat Float?
-//     pickupLng Float?
-//     returnLat Float?
-//     returnLng Float?
+    pickupLat Float?
+    pickupLng Float?
+    returnLat Float?
+    returnLng Float?
 
-//     pickupValetId String?
-//     returnValetId String?
-//     PickupValet   Valet?  @relation("PickupValet", fields: [pickupValetId], references: [uid])
-//     ReturnValet   Valet?  @relation("ReturnValet", fields: [returnValetId], references: [uid])
-//     Booking       Booking @relation(fields: [bookingId], references: [id])
-// }
+    pickupValetId String?
+    returnValetId String?
+    PickupValet   Valet?  @relation("PickupValet", fields: [pickupValetId], references: [uid])
+    ReturnValet   Valet?  @relation("ReturnValet", fields: [returnValetId], references: [uid])
+    Booking       Booking @relation(fields: [bookingId], references: [id])
+}
 
-// model BookingTimeline {
-//     id Int @id @default(autoincrement())
+model BookingTimeline {
+    id Int @id @default(autoincrement())
 
-//     timestamp DateTime      @default(now())
-//     status    BookingStatus
+    timestamp DateTime      @default(now())
+    status    BookingStatus
 
-//     bookingId Int
-//     Booking   Booking @relation(fields: [bookingId], references: [id])
+    bookingId Int
+    Booking   Booking @relation(fields: [bookingId], references: [id])
 
-//     valetId String?
-//     Valet   Valet?  @relation(fields: [valetId], references: [uid])
+    valetId String?
+    Valet   Valet?  @relation(fields: [valetId], references: [uid])
 
-//     managerId String?
-//     Manager   Manager? @relation(fields: [managerId], references: [uid])
+    managerId String?
+    Manager   Manager? @relation(fields: [managerId], references: [uid])
 
-//     @@index([bookingId])
-// }
+    @@index([bookingId])
+}
 
-// model Review {
-//     id        Int      @id @default(autoincrement())
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+model Review {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     rating  Int     @default(0)
-//     comment String?
+    rating  Int     @default(0)
+    comment String?
 
-//     customerId String
-//     Customer   Customer @relation(fields: [customerId], references: [uid])
+    customerId String
+    Customer   Customer @relation(fields: [customerId], references: [uid])
 
-//     garageId Int
-//     Garage   Garage @relation(fields: [garageId], references: [id])
-// }
+    garageId Int
+    Garage   Garage @relation(fields: [garageId], references: [id])
+}
 
-// model Verification {
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
+model Verification {
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-//     verified Boolean @default(false)
+    verified Boolean @default(false)
 
-//     adminId  String
-//     garageId Int    @id
-//     Admin    Admin  @relation(fields: [adminId], references: [uid])
-//     Garage   Garage @relation(fields: [garageId], references: [id])
-// }
+    adminId  String
+    garageId Int    @id
+    Admin    Admin  @relation(fields: [adminId], references: [uid])
+    Garage   Garage @relation(fields: [garageId], references: [id])
+}
