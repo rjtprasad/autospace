@@ -1115,11 +1115,13 @@ input UpdateValetInput {
 input CreateCompanyInput {
   displayName: String
   description: String
+  managerId: String!
 }
 
 input UpdateCompanyInput {
   displayName: String
   description: String
+  managerId: String
   id: Int!
 }
 

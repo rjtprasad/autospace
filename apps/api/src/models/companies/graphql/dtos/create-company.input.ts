@@ -6,4 +6,6 @@ export class CreateCompanyInput extends OmitType(
   Company,
   ['id', 'createdAt', 'updatedAt'],
   InputType,
-) {}
+) {
+  managerId: string
+}
