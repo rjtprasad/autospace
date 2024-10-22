@@ -19,8 +19,19 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type AuthProvider {
+  type: AuthProviderType!
+  uid: String!
+}
+
+enum AuthProviderType {
+  GOOGLE
+  CREDENTIALS
+}
+
 type LoginOutput {
   token: String!
+  user: User!
 }
 
 type Admin {
@@ -191,6 +202,7 @@ type Query {
   whoami: User!
   users(distinct: [UserScalarFieldEnum!], where: UserWhereInput, orderBy: [UserOrderByWithRelationInput!], cursor: UserWhereUniqueInput, take: Int, skip: Int): [User!]!
   user(where: UserWhereUniqueInput!): User!
+  getAuthProvider(uid: String!): AuthProvider
   admins(distinct: [AdminScalarFieldEnum!], where: AdminWhereInput, orderBy: [AdminOrderByWithRelationInput!], cursor: AdminWhereUniqueInput, take: Int, skip: Int): [Admin!]!
   admin(where: AdminWhereUniqueInput!): Admin!
   customers(distinct: [CustomerScalarFieldEnum!], where: CustomerWhereInput, orderBy: [CustomerOrderByWithRelationInput!], cursor: CustomerWhereUniqueInput, take: Int, skip: Int): [Customer!]!
@@ -1076,11 +1088,6 @@ input RegisterWithProviderInput {
   image: String
   uid: String!
   type: AuthProviderType!
-}
-
-enum AuthProviderType {
-  GOOGLE
-  CREDENTIALS
 }
 
 input LoginInput {

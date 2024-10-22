@@ -110,7 +110,7 @@ export class UsersService {
         algorithm: 'HS256',
       },
     )
-    return { token: jwtToken }
+    return { token: jwtToken, user }
   }
 
   findAll(args: FindManyUserArgs) {
