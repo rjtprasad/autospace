@@ -13,9 +13,11 @@ import { IconType } from '../molecules/IconTypes'
 import { HtmlInput } from '../atoms/HtmlInput'
 import { toLocalISOString } from '@autospace/util/date'
 import { ShowGarages } from '../organisms/search/ShowGarages'
+import { FilterSidebar } from '../organisms/search/FilterSidebar'
 
 export const SearchPage = () => {
   const { register, setValue, watch } = useFormContext<FormTypeSearchGarage>()
+
   const formData = watch()
 
   const handleMapChange = useCallback(
@@ -71,6 +73,9 @@ export const SearchPage = () => {
       </Panel>
       <Panel position="right-center">
         <DefaultZoomControls />
+      </Panel>
+      <Panel position="right-top">
+        <FilterSidebar />
       </Panel>
     </Map>
   )
