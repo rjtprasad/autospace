@@ -21,6 +21,7 @@ import { GaragesModule } from './models/garages/garages.module'
 import { BookingsModule } from './models/bookings/bookings.module'
 import { BookingTimelinesModule } from './models/booking-timelines/booking-timelines.module'
 import { AddressesModule } from './models/addresses/addresses.module'
+import { StripeModule } from './models/stripe/stripe.module'
 
 // TODO: move this to util lib.
 const MAX_AGE = 24 * 60 * 60
@@ -60,6 +61,7 @@ const MAX_AGE = 24 * 60 * 60
     BookingsModule,
     BookingTimelinesModule,
     AddressesModule,
+    StripeModule,
   ],
 
   controllers: [AppController],
