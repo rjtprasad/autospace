@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "@apollo/server": "^4.11.0",
-    "@autospace/sample-lib": "^1.0.0",
     "@nestjs/apollo": "^12.2.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.2.3",
