@@ -24,7 +24,6 @@
     "entity:complete": "npx nestjs-prisma-codegen --complete"
   },
   "dependencies": {
-    "@autospace/sample-lib": "*",
     "@apollo/server": "^4.11.0",
     "@nestjs/apollo": "^12.2.0",
     "@nestjs/common": "^10.0.0",
