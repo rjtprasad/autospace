@@ -6,6 +6,7 @@ import { Header } from '@autospace/ui/src/components/organisms/Header'
 import { MenuItem } from '@autospace/util/types'
 import { ToastContainer } from '@autospace/ui/src/components/molecules/Toast'
 import '@autospace/ui/src/app/globals.css'
+import { Container } from '@autospace/ui/src/components/atoms/Container'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,15 +27,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <SessionProvider>
-        <ApolloProvider>
-          <body className={inter.className}>
+      <body className={`${inter.className} bg-gray-25`}>
+        <SessionProvider>
+          <ApolloProvider>
             <Header menuItems={MENUITEMS} />
-            {children}
-            <ToastContainer />
-          </body>
-        </ApolloProvider>
-      </SessionProvider>
+            <Container>{children}</Container>
+          </ApolloProvider>
+        </SessionProvider>
+        <ToastContainer />
+      </body>
     </html>
   )
 }

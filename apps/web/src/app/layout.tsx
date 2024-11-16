@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <SessionProvider>
         <ApolloProvider>
-          <body className={inter.className}>
+          <body className={`${inter.className} bg-gray-25`}>
             <Header menuItems={MENUITEMS} />
             {children}
             <ToastContainer />
