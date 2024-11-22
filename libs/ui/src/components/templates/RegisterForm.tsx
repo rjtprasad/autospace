@@ -54,6 +54,7 @@ export const RegisterForm = ({ className, role }: ISignupFormProps) => {
           {...register('email')}
           placeholder="Enter the email."
           className="text-black"
+          autoComplete="on"
         />
       </HtmlLabel>
       <HtmlLabel title="Password" error={errors.password?.message}>
@@ -62,6 +63,7 @@ export const RegisterForm = ({ className, role }: ISignupFormProps) => {
           type="password"
           placeholder="Enter the password."
           className="text-black"
+          autoComplete="current-password"
         />
       </HtmlLabel>
 
@@ -69,6 +71,7 @@ export const RegisterForm = ({ className, role }: ISignupFormProps) => {
         <HtmlInput
           className="text-black"
           placeholder="Enter your name."
+          autoComplete="on"
           {...register('name')}
         />
       </HtmlLabel>
@@ -79,7 +82,9 @@ export const RegisterForm = ({ className, role }: ISignupFormProps) => {
         </div>
       ) : null}
 
-      <Button type="submit">Register</Button>
+      <Button type="submit" fullWidth>
+        Register
+      </Button>
 
       <div className="mt-4 text-sm">
         Already have an autospace account?

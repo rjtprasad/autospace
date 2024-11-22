@@ -7,7 +7,7 @@ import {
   ResolveField,
 } from '@nestjs/graphql'
 import { GaragesService } from './garages.service'
-import { Garage } from './entity/garage.entity'
+import { Garage, SlotTypeCount } from './entity/garage.entity'
 import { FindManyGarageArgs, FindUniqueGarageArgs } from './dtos/find.args'
 import { CreateGarageInput } from './dtos/create-garage.input'
 import { UpdateGarageInput } from './dtos/update-garage.input'
@@ -24,9 +24,13 @@ import {
   GarageFilter,
   MinimalSlotGroupBy,
 } from './dtos/search-filter.input'
-import { LocationFilterInput } from 'src/common/dtos/common.input'
+import {
+  AggregateCountOutput,
+  LocationFilterInput,
+} from 'src/common/dtos/common.input'
 import { SlotWhereInput } from 'src/models/slots/graphql/dtos/where.args'
 import { BadRequestException } from '@nestjs/common'
+import { GarageWhereInput } from './dtos/where.args'
 
 @Resolver(() => Garage)
 export class GaragesResolver {
@@ -37,8 +41,19 @@ export class GaragesResolver {
 
   @AllowAuthenticated('manager')
   @Mutation(() => Garage)
-  createGarage(@Args('createGarageInput') args: CreateGarageInput) {
-    return this.garagesService.create(args)
+  async createGarage(
+    @Args('createGarageInput') args: CreateGarageInput,
+    @GetUser() user: GetUserType,
+  ) {
+    const company = await this.prisma.company.findFirst({
+      where: { Managers: { some: { uid: user.uid } } },
+    })
+    if (!company?.id) {
+      throw new BadRequestException(
+        'No company associated with the manager id.',
+      )
+    }
+    return this.garagesService.create({ ...args, companyId: company.id })
   }
 
   @Query(() => [Garage], { name: 'garages' })
@@ -112,6 +127,19 @@ export class GaragesResolver {
             },
           },
         },
+      },
+    })
+  }
+
+  @ResolveField(() => [SlotTypeCount])
+  async slotCounts(@Parent() garage: Garage) {
+    return this.prisma.slot.groupBy({
+      by: ['type'],
+      where: {
+        garageId: garage.id,
+      },
+      _count: {
+        type: true,
       },
     })
   }
@@ -214,5 +242,19 @@ export class GaragesResolver {
   @ResolveField(() => [Slot])
   slots(@Parent() garage: Garage) {
     return this.prisma.slot.findMany({ where: { garageId: garage.id } })
+  }
+
+  @Query(() => AggregateCountOutput, {
+    name: 'garagesCount',
+  })
+  async garagesCount(
+    @Args('where', { nullable: true })
+    where: GarageWhereInput,
+  ) {
+    const garages = await this.prisma.garage.aggregate({
+      _count: { _all: true },
+      where,
+    })
+    return { count: garages._count._all }
   }
 }

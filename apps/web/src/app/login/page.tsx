@@ -3,7 +3,7 @@ import { AuthLayout } from '@autospace/ui/src/components/molecules/AuthLayout'
 
 export default function Page() {
   return (
-    <AuthLayout title="Login">
+    <AuthLayout title={'Login'}>
       <LoginForm />
     </AuthLayout>
   )

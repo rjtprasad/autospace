@@ -35,7 +35,7 @@ export const Directions = ({
 
       const coordinates =
         data?.routes[0]?.legs[0]?.steps?.map(
-          (step: { maneuver: { location: [] } }) => step.maneuver.location,
+          (step: { maneuver: { location: unknown } }) => step.maneuver.location,
         ) || []
 
       const newDistance = data.routes[0].distance || 0

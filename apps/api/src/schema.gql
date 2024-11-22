@@ -29,6 +29,10 @@ enum AuthProviderType {
   CREDENTIALS
 }
 
+type AggregateCountOutput {
+  count: Float!
+}
+
 type LoginOutput {
   token: String!
   user: User!
@@ -126,6 +130,7 @@ type Garage {
   updatedAt: DateTime!
   companyId: Float!
   images: [String!]!
+  slotCounts: [SlotTypeCount!]!
   availableSlots(slotsFilter: SlotWhereInput, dateFilter: DateFilterInput!): [MinimalSlotGroupBy!]!
   verification: Verification
   company: Company!
@@ -543,6 +548,11 @@ input DateFilterInput {
   end: String!
 }
 
+type SlotTypeCount {
+  type: SlotType!
+  count: Float!
+}
+
 type ValetAssignment {
   returnLat: Float
   returnLng: Float
@@ -635,6 +645,7 @@ type Query {
   garages(distinct: [GarageScalarFieldEnum!], where: GarageWhereInput, orderBy: [GarageOrderByWithRelationInput!], cursor: GarageWhereUniqueInput, take: Float, skip: Float): [Garage!]!
   garage(where: GarageWhereUniqueInput!): Garage!
   searchGarages(dateFilter: DateFilterInput!, locationFilter: LocationFilterInput!, slotsFilter: SlotWhereInput, garageFilter: GarageFilter): [Garage!]!
+  garagesCount(where: GarageWhereInput): AggregateCountOutput!
   bookings(distinct: [BookingScalarFieldEnum!], where: BookingWhereInput, orderBy: [BookingOrderByWithRelationInput!], cursor: BookingWhereUniqueInput, take: Float, skip: Float): [Booking!]!
   booking(where: BookingWhereUniqueInput!): Booking!
   bookingTimelines(distinct: [BookingTimelineScalarFieldEnum!], where: BookingTimelineWhereInput, orderBy: [BookingTimelineOrderByWithRelationInput!], cursor: BookingTimelineWhereUniqueInput, take: Float, skip: Float): [BookingTimeline!]!
@@ -1182,12 +1193,14 @@ input CreateCompanyInput {
   displayName: String
   description: String
   managerId: String!
+  managerName: String
 }
 
 input UpdateCompanyInput {
   displayName: String
   description: String
   managerId: String
+  managerName: String
   id: Float!
 }
 
@@ -1262,15 +1275,33 @@ input UpdateReviewInput {
 input CreateGarageInput {
   displayName: String
   description: String
-  companyId: Float!
   images: [String!]!
+  Address: CreateAddressInputWithoutGarageId!
+  Slots: [CreateSlotInputWithoutGarageId!]!
+}
+
+input CreateAddressInputWithoutGarageId {
+  address: String!
+  lat: Float!
+  lng: Float!
+}
+
+input CreateSlotInputWithoutGarageId {
+  displayName: String
+  type: SlotType!
+  length: Float
+  width: Float
+  height: Float
+  pricePerHour: Float!
+  count: Float!
 }
 
 input UpdateGarageInput {
   displayName: String
   description: String
-  companyId: Float
   images: [String!]
+  Address: CreateAddressInputWithoutGarageId
+  Slots: [CreateSlotInputWithoutGarageId!]
   id: Float!
 }
 

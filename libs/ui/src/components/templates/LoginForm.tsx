@@ -21,8 +21,6 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
 
   const { replace } = useRouter()
 
-  console.log('errors', errors)
-
   return (
     <Form
       onSubmit={handleSubmit(async (data) => {
@@ -44,13 +42,18 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
       })}
     >
       <HtmlLabel title="Email" error={errors.email?.message}>
-        <HtmlInput placeholder="Email" {...register('email')} />
+        <HtmlInput
+          placeholder="Email"
+          {...register('email')}
+          autoComplete="on"
+        />
       </HtmlLabel>
       <HtmlLabel title="Password" error={errors.password?.message}>
         <HtmlInput
+          {...register('password')}
           type="password"
           placeholder="Password"
-          {...register('password')}
+          autoComplete="current-password"
         />
       </HtmlLabel>
       <Button type="submit">Submit</Button>

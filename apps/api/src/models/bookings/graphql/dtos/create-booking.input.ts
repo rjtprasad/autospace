@@ -10,11 +10,13 @@ export class CreateBookingInput extends PickType(
   InputType,
 ) {
   garageId: Garage['id']
+
   @Field(() => SlotType)
   type: SlotType
 
   @Field(() => Float)
   pricePerHour?: number
+
   @Field(() => Float)
   totalPrice?: number
 

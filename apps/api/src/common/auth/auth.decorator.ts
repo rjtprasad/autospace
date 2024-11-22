@@ -6,7 +6,6 @@ import {
   ExecutionContext,
 } from '@nestjs/common'
 import { Role } from 'src/common/types'
-
 import { AuthGuard } from './auth.guard'
 import { GqlExecutionContext } from '@nestjs/graphql'
 

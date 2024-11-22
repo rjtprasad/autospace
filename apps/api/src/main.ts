@@ -9,9 +9,9 @@ async function bootstrap() {
   app.enableCors()
 
   const config = new DocumentBuilder()
-    .setTitle('Autosapce | Rajat Prasad')
+    .setTitle('Autospace | Rajat Prasad')
     .setDescription(
-      `<h2> Autosapce APIs </h2>
+      `<h2> Autospace APIs </h2>
       <h3>Looking for the graphql api?</h3> Go to <a href="/graphql" target="_blank">/graphql</a>.
       Or,
       You might also need to use the <a target="_blank" href="https://studio.apollographql.com/sandbox/explorer?endpoint=http://localhost:3000/graphql&document=query users{users{ uid }}">Apollo explorer</a> for a greater experience.`,
@@ -23,6 +23,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('/rest', app, document)
 
-  await app.listen(port, '0.0.0.0')
+  await app.listen(port)
+  // await app.listen(port, '0.0.0.0')
 }
 bootstrap()

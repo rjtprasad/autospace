@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate {
     private readonly reflector: Reflector,
     private readonly prisma: PrismaService,
   ) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context)
     const req = ctx.getContext().req
@@ -28,6 +29,7 @@ export class AuthGuard implements CanActivate {
 
   private async authenticateUser(req: any): Promise<void> {
     const bearerHeader = req.headers.authorization
+
     // Bearer eylskfdjlsdf309
     const token = bearerHeader?.split(' ')[1]
 
@@ -44,7 +46,7 @@ export class AuthGuard implements CanActivate {
         )
       }
 
-      const user = this.prisma.user.findUnique({ where: { uid } })
+      const user = await this.prisma.user.findUnique({ where: { uid } })
       if (!user) {
         throw new UnauthorizedException(
           'Invalid token. No user present with the uid.',
@@ -84,16 +86,14 @@ export class AuthGuard implements CanActivate {
   }
 
   private async getUserRoles(uid: string): Promise<Role[]> {
-    const rolePromises = [
+    const roles: Role[] = []
+
+    const [admin, manager, valet] = await Promise.all([
+      // Add promises for other role models here
       this.prisma.admin.findUnique({ where: { uid } }),
       this.prisma.manager.findUnique({ where: { uid } }),
       this.prisma.valet.findUnique({ where: { uid } }),
-      // Add promises for other role models here
-    ]
-
-    const roles: Role[] = []
-
-    const [admin, manager, valet] = await Promise.all(rolePromises)
+    ])
 
     admin && roles.push('admin')
     manager && roles.push('manager')

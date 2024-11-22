@@ -93,7 +93,11 @@ export const BookSlotPopup = ({
 
           setBooking(true)
           // Create booking session
-          await createBookingSession(uid!, totalPriceObj, bookingData)
+          const res = await createBookingSession(
+            uid!,
+            totalPriceObj,
+            bookingData,
+          )
           setBooking(false)
         })}
       >
@@ -240,8 +244,8 @@ export const createBookingSession = async (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      uid,
       totalPriceObj,
+      uid,
       bookingData,
     }),
   })

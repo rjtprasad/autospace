@@ -20,8 +20,6 @@ export default function Home() {
     },
   })
 
-  console.log(garages, error)
-
   return (
     <main className=" p-8">
       <div>

@@ -9,7 +9,7 @@ export default class StripeService {
 
   constructor() {
     this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2024-10-28.acacia',
+      apiVersion: '2024-04-10',
     })
   }
 
