@@ -21,21 +21,23 @@ export class GaragesService {
     if (Slots.some((slot) => slot.count > 10)) {
       throw new Error('Slot count cannot be more than 20 for any slot type.')
     }
-    const garage = await this.prisma.garage.create({
-      data: {
-        Address: { create: Address },
-        companyId,
-        description,
-        displayName,
-        images,
-      },
-    })
-    const slotsByType = this.groupSlotsByType(Slots, garage.id)
+    return await this.prisma.$transaction(async (tx) => {
+      const createdGarage = await tx.garage.create({
+        data: {
+          Address: { create: Address },
+          companyId,
+          description,
+          displayName,
+          images,
+        },
+      })
+      const slotsByType = this.groupSlotsByType(Slots, createdGarage.id)
 
-    const createSlots = await this.prisma.slot.createMany({
-      data: slotsByType,
+      const createSlots = await tx.slot.createMany({
+        data: slotsByType,
+      })
+      return createdGarage
     })
-    return garage
   }
 
   findAll(args: FindManyGarageArgs) {
@@ -62,25 +64,26 @@ export class GaragesService {
     slots: CreateSlotInputWithoutGarageId[],
     garageId: number,
   ): Prisma.SlotCreateManyInput[] {
-    const slotsByType = {}
-    // const slotCounts = {
-    //   CAR: 0,
-    //   HEAVY: 0,
-    //   BIKE: 0,
-    //   BICYCLE: 0,
-    // }
+    const slotsByType = []
+    const slotCounts = {
+      CAR: 0,
+      HEAVY: 0,
+      BIKE: 0,
+      BICYCLE: 0,
+    }
 
     slots.forEach(({ count, ...slot }) => {
-      if (!slotsByType[slot.type]) {
-        slotsByType[slot.type] = []
-      }
+      // if (!slotsByType[slot.type]) {
+      //   slotsByType[slot.type] = []
+      // }
 
       for (let i = 0; i < count; i++) {
-        slotsByType[slot.type].push({
+        slotsByType.push({
           ...slot,
-          displayName: `${slot.type} ${slotsByType[slot.type].length}`,
+          displayName: `${slot.type} ${slotCounts[slot.type]}`,
           garageId,
         })
+        slotCounts[slot.type]++
       }
     })
 

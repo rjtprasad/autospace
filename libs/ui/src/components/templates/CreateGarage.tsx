@@ -24,8 +24,8 @@ import { SearchPlaceBox } from '../organisms/map/SearchPlacesBox'
 import { ViewState } from '@autospace/util/types'
 import { CenterOfMap, DefaultZoomControls } from '../organisms/map/ZoomControls'
 import { useFormContext } from 'react-hook-form'
-import { GarageMapMarker } from '../organisms/CreateGarageComponents'
-// import { ToastContainer, toast } from '../molecules/Toast'
+import { AddSlots, GarageMapMarker } from '../organisms/CreateGarageComponents'
+import { ToastContainer, toast } from '../molecules/Toast'
 
 const CreateGarageContent = () => {
   const {
@@ -47,13 +47,13 @@ const CreateGarageContent = () => {
     CreateGarageDocument,
     {
       refetchQueries: [namedOperations.Query.Garages],
-      //   onCompleted: () => {
-      //     reset()
-      //     toast('Garage created successfully.')
-      //   },
-      //   onError(error, clientOptions) {
-      //     toast('Action failed.')
-      //   },
+      onCompleted: () => {
+        reset()
+        toast('Garage created successfully.')
+      },
+      onError(error, clientOptions) {
+        toast('Action failed.')
+      },
     },
   )
 
@@ -61,22 +61,30 @@ const CreateGarageContent = () => {
     <div className="grid md:grid-cols-2 gap-2 mt-2 ">
       <div>
         <Form
-          onSubmit={handleSubmit((data) => {
-            console.log('data', data)
-            //   const uploadedImages = await upload(images)
+          onSubmit={handleSubmit(
+            async ({
+              images,
+              slotTypes,
+              location,
+              displayName,
+              description,
+            }) => {
+              console.log('data', data)
+              const uploadedImages = await upload(images)
 
-            //   const result = await createGarage({
-            //     variables: {
-            //       createGarageInput: {
-            //         Address: location,
-            //         images: uploadedImages,
-            //         Slots: slotTypes,
-            //         description,
-            //         displayName,
-            //       },
-            //     },
-            //   })
-          })}
+              const result = await createGarage({
+                variables: {
+                  createGarageInput: {
+                    Address: location,
+                    images: uploadedImages,
+                    Slots: slotTypes,
+                    description,
+                    displayName,
+                  },
+                },
+              })
+            },
+          )}
         >
           <HtmlLabel error={errors.displayName?.message} title="Display Name">
             <HtmlInput {...register('displayName')} placeholder="Garage name" />
@@ -110,7 +118,7 @@ const CreateGarageContent = () => {
               )}
             />
           </ImagePreview>
-          {/* <AddSlots /> */}
+          <AddSlots />
           <Button loading={uploading || loading} type="submit">
             Submit
           </Button>
