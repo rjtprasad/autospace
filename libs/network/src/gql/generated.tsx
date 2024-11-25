@@ -769,6 +769,7 @@ export type Mutation = {
   createCustomer: Customer
   createGarage: Garage
   createManager: Manager
+  createManySlots: ReturnCount
   createReview: Review
   createSlot: Slot
   createValet: Valet
@@ -837,6 +838,11 @@ export type MutationCreateGarageArgs = {
 
 export type MutationCreateManagerArgs = {
   createManagerInput: CreateManagerInput
+}
+
+export type MutationCreateManySlotsArgs = {
+  count: Scalars['Float']['input']
+  createSlotInput: CreateSlotInput
 }
 
 export type MutationCreateReviewArgs = {
@@ -1236,6 +1242,11 @@ export type RegisterWithProviderInput = {
   uid: Scalars['String']['input']
 }
 
+export type ReturnCount = {
+  __typename?: 'ReturnCount'
+  count: Scalars['Float']['output']
+}
+
 export type Review = {
   __typename?: 'Review'
   comment?: Maybe<Scalars['String']['output']>
@@ -1366,7 +1377,7 @@ export enum SlotType {
 
 export type SlotTypeCount = {
   __typename?: 'SlotTypeCount'
-  count: Scalars['Float']['output']
+  count?: Maybe<Scalars['Float']['output']>
   type: SlotType
 }
 
@@ -1967,7 +1978,7 @@ export type GaragesQuery = {
     slotCounts: Array<{
       __typename?: 'SlotTypeCount'
       type: SlotType
-      count: number
+      count?: number | null
     }>
   }>
   garagesCount: { __typename?: 'AggregateCountOutput'; count: number }
@@ -1980,6 +1991,16 @@ export type CreateGarageMutationVariables = Exact<{
 export type CreateGarageMutation = {
   __typename?: 'Mutation'
   createGarage: { __typename?: 'Garage'; id: number }
+}
+
+export type CreateManySlotsMutationVariables = Exact<{
+  createSlotInput: CreateSlotInput
+  count: Scalars['Float']['input']
+}>
+
+export type CreateManySlotsMutation = {
+  __typename?: 'Mutation'
+  createManySlots: { __typename?: 'ReturnCount'; count: number }
 }
 
 export const namedOperations = {
@@ -1996,6 +2017,7 @@ export const namedOperations = {
     RegisterWithProvider: 'RegisterWithProvider',
     CreateCompany: 'CreateCompany',
     CreateGarage: 'CreateGarage',
+    CreateManySlots: 'CreateManySlots',
   },
 }
 
@@ -2928,4 +2950,77 @@ export const CreateGarageDocument = {
 } as unknown as DocumentNode<
   CreateGarageMutation,
   CreateGarageMutationVariables
+>
+export const CreateManySlotsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateManySlots' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'createSlotInput' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateSlotInput' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'count' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createManySlots' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'createSlotInput' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'createSlotInput' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'count' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'count' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'count' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateManySlotsMutation,
+  CreateManySlotsMutationVariables
 >

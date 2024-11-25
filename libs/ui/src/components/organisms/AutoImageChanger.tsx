@@ -40,7 +40,7 @@ export const AutoImageChanger = ({
 
   return (
     <div className={`relative w-full overflow-hidden ${aspectRatio}`}>
-      <Image
+      <img
         src={images[currentImageIndex]}
         alt="Garage"
         className="object-cover h-full w-full"

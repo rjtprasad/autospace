@@ -133,7 +133,7 @@ export class GaragesResolver {
 
   @ResolveField(() => [SlotTypeCount])
   async slotCounts(@Parent() garage: Garage) {
-    return this.prisma.slot.groupBy({
+    const slotCounts = await this.prisma.slot.groupBy({
       by: ['type'],
       where: {
         garageId: garage.id,
@@ -142,6 +142,7 @@ export class GaragesResolver {
         type: true,
       },
     })
+    return slotCounts.map(({ type, _count }) => ({ type, count: _count.type }))
   }
 
   @ResolveField(() => [MinimalSlotGroupBy], {

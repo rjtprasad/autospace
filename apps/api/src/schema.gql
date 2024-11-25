@@ -550,7 +550,7 @@ input DateFilterInput {
 
 type SlotTypeCount {
   type: SlotType!
-  count: Float!
+  count: Float
 }
 
 type ValetAssignment {
@@ -580,6 +580,10 @@ type Slot {
   garageId: Float!
   garage: Garage!
   bookings: [Booking!]!
+}
+
+type ReturnCount {
+  count: Float!
 }
 
 type Review {
@@ -1103,6 +1107,7 @@ type Mutation {
   updateValetAssignment(updateValetAssignmentInput: UpdateValetAssignmentInput!): ValetAssignment!
   removeValetAssignment(where: ValetAssignmentWhereUniqueInput!): ValetAssignment!
   createSlot(createSlotInput: CreateSlotInput!): Slot!
+  createManySlots(createSlotInput: CreateSlotInput!, count: Float!): ReturnCount!
   updateSlot(updateSlotInput: UpdateSlotInput!): Slot!
   removeSlot(where: SlotWhereUniqueInput!): Slot!
   createReview(createReviewInput: CreateReviewInput!): Review!
