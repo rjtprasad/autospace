@@ -12,21 +12,21 @@
   "dependencies": {
     "@autospace/network": "*",
     "@autospace/ui": "*",
-    "@tabler/icons-react": "^3.3.0",
-    "next": "14.1.4",
+    "@tabler/icons-react": "^3.22.0",
+    "next": "15.0.3",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^22",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
     "postcss": "^8",
-    "tailwindcss": "^3.3.0",
+    "tailwindcss": "^3.4.15",
     "typescript": "^5"
   }
 }

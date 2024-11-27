@@ -39,9 +39,8 @@ export class StripeController {
       throw new BadRequestException('Session id missing.')
     }
 
-    const session = await this.stripeService.stripe.checkout.sessions.retrieve(
-      sessionId,
-    )
+    const session =
+      await this.stripeService.stripe.checkout.sessions.retrieve(sessionId)
 
     const { bookingData } = session.metadata
 

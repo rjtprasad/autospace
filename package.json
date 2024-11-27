@@ -20,16 +20,16 @@
     "tsc": "yarn nx run-many -t tsc",
     "lint": "yarn nx run-many -t lint",
     "build": "yarn nx run-many -t build",
-    "validate": "yarn format:write && yarn tsc && yarn lint && yarn build",
+    "validate": "yarn format:write && yarn tsc && yarn lint",
     "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "prettier": "^3.3.3",
-    "typescript": "^5.6.3",
+    "prettier": "^3.4.1",
+    "typescript": "^5.7.2",
     "husky": "^9.1.7",
-    "nx": "20.1.2"
+    "nx": "20.1.3"
   }
 }

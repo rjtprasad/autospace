@@ -1,3 +1,4 @@
+'use client'
 import { useFormCreateCompany } from '@autospace/forms/src/createCompany'
 import { Button } from '../atoms/Button'
 import { Dialog } from '../atoms/Dialog'
@@ -32,7 +33,7 @@ export const CreateCompany = () => {
       setValue('managerId', uid)
     }
     setValue('managerName', managerName)
-  }, [uid])
+  }, [uid, setValue, managerName])
 
   const [open, setOpen] = useState(false)
 

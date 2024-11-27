@@ -47,7 +47,7 @@ export const Directions = ({
         prevDistanceRef.current = newDistance
       }
     })()
-  }, [originDebounced, destinationDebounced])
+  }, [originDebounced, destinationDebounced, setDistance])
 
   const dataOne = useMemo(
     () => ({

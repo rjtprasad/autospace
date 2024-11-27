@@ -366,7 +366,6 @@ input BookingRelationFilter {
 }
 
 input BookingWhereInput {
-  status: BookingStatus
   id: IntFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter
@@ -377,6 +376,7 @@ input BookingWhereInput {
   vehicleNumber: StringFilter
   phoneNumber: StringFilter
   passcode: StringFilter
+  status: EnumBookingStatusFilter
   slotId: IntFilter
   customerId: StringFilter
   Slot: SlotRelationFilter
@@ -386,6 +386,13 @@ input BookingWhereInput {
   AND: [BookingWhereInput!]
   OR: [BookingWhereInput!]
   NOT: [BookingWhereInput!]
+}
+
+input EnumBookingStatusFilter {
+  equals: BookingStatus
+  in: [BookingStatus!]
+  notIn: [BookingStatus!]
+  not: BookingStatus
 }
 
 input SlotRelationFilter {
@@ -651,6 +658,8 @@ type Query {
   searchGarages(dateFilter: DateFilterInput!, locationFilter: LocationFilterInput!, slotsFilter: SlotWhereInput, garageFilter: GarageFilter): [Garage!]!
   garagesCount(where: GarageWhereInput): AggregateCountOutput!
   bookings(distinct: [BookingScalarFieldEnum!], where: BookingWhereInput, orderBy: [BookingOrderByWithRelationInput!], cursor: BookingWhereUniqueInput, take: Float, skip: Float): [Booking!]!
+  bookingsForGarage(distinct: [BookingScalarFieldEnum!], where: BookingWhereInput, orderBy: [BookingOrderByWithRelationInput!], cursor: BookingWhereUniqueInput, take: Float, skip: Float, garageId: Float!): [Booking!]!
+  bookingsCount(where: BookingWhereInput): AggregateCountOutput!
   booking(where: BookingWhereUniqueInput!): Booking!
   bookingTimelines(distinct: [BookingTimelineScalarFieldEnum!], where: BookingTimelineWhereInput, orderBy: [BookingTimelineOrderByWithRelationInput!], cursor: BookingTimelineWhereUniqueInput, take: Float, skip: Float): [BookingTimeline!]!
   bookingTimeline(where: BookingTimelineWhereUniqueInput!): BookingTimeline!
@@ -1346,18 +1355,12 @@ input UpdateBookingInput {
 
 input CreateBookingTimelineInput {
   status: BookingStatus!
-  valetId: String
-  managerId: String
   bookingId: Float!
-  timestamp: DateTime!
 }
 
 input UpdateBookingTimelineInput {
   status: BookingStatus
-  valetId: String
-  managerId: String
   bookingId: Float
-  timestamp: DateTime
   id: Float!
 }
 

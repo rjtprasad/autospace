@@ -1,3 +1,4 @@
+'use client'
 import { MyCompanyDocument } from '@autospace/network/src/gql/generated'
 import { useQuery } from '@apollo/client'
 import { LoaderPanel } from '../molecules/Loader'
