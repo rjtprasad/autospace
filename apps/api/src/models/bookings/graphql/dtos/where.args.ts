@@ -1,5 +1,5 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
-import { $Enums, BookingStatus, Prisma } from '@prisma/client'
+import { BookingStatus, Prisma } from '@prisma/client'
 import {
   DateTimeFilter,
   FloatFilter,

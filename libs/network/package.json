@@ -6,7 +6,7 @@
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/named-operations-object": "^3.0.0",
-    "@graphql-codegen/typed-document-node": "^5.0.6",
+    "@graphql-codegen/typed-document-node": "^5.0.12",
     "@parcel/watcher": "^2.4.1",
     "@types/jsonwebtoken": "^9.0.6"
   },
