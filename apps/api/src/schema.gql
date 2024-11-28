@@ -99,6 +99,7 @@ type Booking {
   customerId: String!
   slot: Slot!
   customer: Customer!
+  bookingTimeline: [BookingTimeline!]!
   valetAssignment: ValetAssignment
 }
 

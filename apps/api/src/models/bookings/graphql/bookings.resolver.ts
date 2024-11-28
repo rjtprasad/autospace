@@ -20,6 +20,7 @@ import { Customer } from 'src/models/customers/graphql/entity/customer.entity'
 import { ValetAssignment } from 'src/models/valet-assignments/graphql/entity/valet-assignment.entity'
 import { AggregateCountOutput } from 'src/common/dtos/common.input'
 import { BookingWhereInput } from './dtos/where.args'
+import { BookingTimeline } from 'src/models/booking-timelines/graphql/entity/booking-timeline.entity'
 
 @Resolver(() => Booking)
 export class BookingsResolver {
@@ -125,6 +126,13 @@ export class BookingsResolver {
   customer(@Parent() booking: Booking) {
     return this.prisma.customer.findFirst({
       where: { uid: booking.customerId },
+    })
+  }
+
+  @ResolveField(() => [BookingTimeline])
+  bookingTimeline(@Parent() booking: Booking) {
+    return this.prisma.bookingTimeline.findMany({
+      where: { bookingId: booking.id },
     })
   }
 

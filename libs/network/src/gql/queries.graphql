@@ -193,6 +193,10 @@ fragment BookingFields on Booking {
   vehicleNumber
   passcode
   status
+  bookingTimeline {
+    status
+    timestamp
+  }
   valetAssignment {
     pickupValet {
       ...ValetFields

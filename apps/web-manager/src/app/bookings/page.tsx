@@ -2,12 +2,13 @@ import { IsLoggedIn } from '@autospace/ui/src/components/organisms/IsLoggedIn'
 import { IsManager } from '@autospace/ui/src/components/organisms/IsManager'
 import { ListGarageBookings } from '@autospace/ui/src/components/templates/ListGarageBookings'
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
-  const garageId = Number(searchParams['garageId'])
+  const garageIdParam = Number(searchParams['garageId'])
+  const garageId = garageIdParam ? Number(garageIdParam) : NaN
 
   if (isNaN(garageId)) {
     return <p>Invalid garage ID</p>
