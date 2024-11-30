@@ -45,6 +45,18 @@ export class BookingsResolver {
     return this.bookingsService.findAll(args)
   }
 
+  @AllowAuthenticated()
+  @Query(() => [Booking], { name: 'bookingsForCustomer' })
+  bookingsForCustomer(
+    @Args() args: FindManyBookingArgs,
+    @GetUser() user: GetUserType,
+  ) {
+    return this.bookingsService.findAll({
+      ...args,
+      where: { ...args.where, customerId: { equals: user.uid } },
+    })
+  }
+
   @AllowAuthenticated('admin', 'manager')
   @Query(() => [Booking], { name: 'bookingsForGarage' })
   async bookingsForGarage(

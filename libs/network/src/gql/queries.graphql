@@ -258,3 +258,27 @@ mutation createBookingTimeline(
   }
 }
 
+query BookingsForCustomer(
+  $skip: Float
+  $take: Float
+  $cursor: BookingWhereUniqueInput
+  $orderBy: [BookingOrderByWithRelationInput!]
+  $where: BookingWhereInput
+  $distinct: [BookingScalarFieldEnum!]
+) {
+  bookingsForCustomer(
+    skip: $skip
+    take: $take
+    cursor: $cursor
+    orderBy: $orderBy
+    where: $where
+    distinct: $distinct
+  ) {
+    ...BookingFields
+  }
+
+  bookingsCount(where: $where) {
+    count
+  }
+}
+
