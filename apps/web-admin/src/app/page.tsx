@@ -1,7 +1,12 @@
+import { IsAdmin } from '@autospace/ui/src/components/organisms/IsAdmin'
+import { AdminHome } from '@autospace/ui/src/components/templates/AdminHome'
+
 export default function Home() {
   return (
     <main>
-      <h3>Hello Admin</h3>
+      <IsAdmin>
+        <AdminHome />
+      </IsAdmin>
     </main>
   )
 }

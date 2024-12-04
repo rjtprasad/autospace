@@ -486,7 +486,6 @@ export type CreateValetInput = {
 }
 
 export type CreateVerificationInput = {
-  adminId: Scalars['String']['input']
   garageId: Scalars['Float']['input']
   verified: Scalars['Boolean']['input']
 }
@@ -999,6 +998,7 @@ export type Query = {
   address: Address
   addresses: Array<Address>
   admin: Admin
+  adminMe: Admin
   admins: Array<Admin>
   booking: Booking
   bookingTimeline: BookingTimeline
@@ -1563,7 +1563,6 @@ export type UpdateValetInput = {
 }
 
 export type UpdateVerificationInput = {
-  adminId?: InputMaybe<Scalars['String']['input']>
   garageId: Scalars['Float']['input']
   verified?: InputMaybe<Scalars['Boolean']['input']>
 }
@@ -2220,6 +2219,45 @@ export type BookingsForCustomerQuery = {
   bookingsCount: { __typename?: 'AggregateCountOutput'; count: number }
 }
 
+export type AdminMeQueryVariables = Exact<{ [key: string]: never }>
+
+export type AdminMeQuery = {
+  __typename?: 'Query'
+  adminMe: { __typename?: 'Admin'; uid: string }
+}
+
+export type RemoveVerificationMutationVariables = Exact<{
+  where: VerificationWhereUniqueInput
+}>
+
+export type RemoveVerificationMutation = {
+  __typename?: 'Mutation'
+  removeVerification: {
+    __typename?: 'Verification'
+    adminId: string
+    createdAt: any
+    garageId: number
+    updatedAt: any
+    verified: boolean
+  }
+}
+
+export type CreateVerificationMutationVariables = Exact<{
+  createVerificationInput: CreateVerificationInput
+}>
+
+export type CreateVerificationMutation = {
+  __typename?: 'Mutation'
+  createVerification: {
+    __typename?: 'Verification'
+    adminId: string
+    createdAt: any
+    garageId: number
+    updatedAt: any
+    verified: boolean
+  }
+}
+
 export const namedOperations = {
   Query: {
     Companies: 'Companies',
@@ -2229,6 +2267,7 @@ export const namedOperations = {
     Garages: 'Garages',
     BookingsForGarage: 'BookingsForGarage',
     BookingsForCustomer: 'BookingsForCustomer',
+    AdminMe: 'AdminMe',
   },
   Mutation: {
     RegisterWithCredentials: 'RegisterWithCredentials',
@@ -2238,6 +2277,8 @@ export const namedOperations = {
     CreateGarage: 'CreateGarage',
     CreateManySlots: 'CreateManySlots',
     createBookingTimeline: 'createBookingTimeline',
+    RemoveVerification: 'RemoveVerification',
+    CreateVerification: 'CreateVerification',
   },
   Fragment: {
     ValetFields: 'ValetFields',
@@ -4071,4 +4112,145 @@ export const BookingsForCustomerDocument = {
 } as unknown as DocumentNode<
   BookingsForCustomerQuery,
   BookingsForCustomerQueryVariables
+>
+export const AdminMeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'AdminMe' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'adminMe' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'uid' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AdminMeQuery, AdminMeQueryVariables>
+export const RemoveVerificationDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'RemoveVerification' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'VerificationWhereUniqueInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'removeVerification' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'adminId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'garageId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'verified' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  RemoveVerificationMutation,
+  RemoveVerificationMutationVariables
+>
+export const CreateVerificationDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateVerification' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'createVerificationInput' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'CreateVerificationInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createVerification' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'createVerificationInput' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'createVerificationInput' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'adminId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'garageId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'updatedAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'verified' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateVerificationMutation,
+  CreateVerificationMutationVariables
 >

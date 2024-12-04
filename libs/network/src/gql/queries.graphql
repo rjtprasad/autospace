@@ -282,3 +282,33 @@ query BookingsForCustomer(
   }
 }
 
+
+query AdminMe {
+  adminMe {
+    uid
+  }
+}
+
+
+mutation RemoveVerification($where: VerificationWhereUniqueInput!) {
+  removeVerification(where: $where) {
+    adminId
+    createdAt
+    garageId
+    updatedAt
+    verified
+  }
+}
+
+
+mutation CreateVerification(
+  $createVerificationInput: CreateVerificationInput!
+) {
+  createVerification(createVerificationInput: $createVerificationInput) {
+    adminId
+    createdAt
+    garageId
+    updatedAt
+    verified
+  }
+}
