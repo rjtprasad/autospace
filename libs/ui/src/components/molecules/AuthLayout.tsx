@@ -13,14 +13,13 @@ export interface IAuthLayoutProps {
 
 export const AuthLayout = ({ title, children }: IAuthLayoutProps) => {
   return (
-    <div className="flex gap-2 justify-center h-[calc(100vh-4rem)] overflow-hidden  p-2 ">
-      <div
-        className=" -skew-y-3 origin-top-right min-w-96 flex flex-col justify-center items-center   "
-        style={{
-          background:
-            'linear-gradient(to top right, hsl(0, 0%, 6%), hsl(52, 0%, 10%))',
-        }}
-      >
+    <div className="relative h-[calc(100vh-4rem)]">
+      <CarScene
+        orbitControls={false}
+        camera={<RotatingCamera />}
+        hideAllComments
+      />
+      <div className=" flex flex-col justify-center items-center absolute top-0 bg-black/20 backdrop-blur-sm bottom-0  ">
         <div className="p-4 text-white">
           <div className="w-full max-w-lg mx-auto">
             <h1 className="flex items-center gap-2 mb-2 text-2xl">
@@ -34,14 +33,6 @@ export const AuthLayout = ({ title, children }: IAuthLayoutProps) => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="relative  flex-grow  bg-white">
-        <CarScene
-          orbitControls={false}
-          camera={<RotatingCamera />}
-          hideAllComments
-        />
       </div>
     </div>
   )
