@@ -26,6 +26,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "resolutions": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
   "devDependencies": {
     "prettier": "^3.4.1",
     "typescript": "^5.7.2",

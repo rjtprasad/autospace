@@ -146,7 +146,7 @@ export const BookSlotPopup = ({
                         className="flex flex-wrap items-center gap-2 bg-white"
                       >
                         <Radio key={slot.type} value={slot.type}>
-                          {({ checked }) => (
+                          {({ checked }: { checked: boolean }) => (
                             <div
                               className={`cursor-default border-2 p-2 ${
                                 checked

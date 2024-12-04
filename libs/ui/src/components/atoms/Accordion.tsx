@@ -20,7 +20,7 @@ export const Accordion = ({
   defaultOpen = false,
 }: IAccordionProps) => (
   <Disclosure defaultOpen={defaultOpen}>
-    {({ open }) => (
+    {({ open }: { open: boolean }) => (
       <>
         <DisclosureButton
           className={`flex justify-between items-center w-full py-2 font-medium ${className}`}
