@@ -50,7 +50,7 @@ export const GarageAdminCard = ({
         ))}
       </div>
 
-      <div className="mt-2">{children}</div>
+      <div className="mt-auto">{children}</div>
     </div>
   )
 }
