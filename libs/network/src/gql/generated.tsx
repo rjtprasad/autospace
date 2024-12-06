@@ -765,6 +765,7 @@ export type MinimalSlotGroupBy = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  assignValet: Booking
   createAddress: Address
   createAdmin: Admin
   createBooking: Booking
@@ -810,6 +811,11 @@ export type Mutation = {
   updateValet: Valet
   updateValetAssignment: ValetAssignment
   updateVerification: Verification
+}
+
+export type MutationAssignValetArgs = {
+  bookingId: Scalars['Float']['input']
+  status: Scalars['String']['input']
 }
 
 export type MutationCreateAddressArgs = {
@@ -2449,6 +2455,16 @@ export type ValetDropsQuery = {
   }>
 }
 
+export type AssignValetMutationVariables = Exact<{
+  bookingId: Scalars['Float']['input']
+  status: Scalars['String']['input']
+}>
+
+export type AssignValetMutation = {
+  __typename?: 'Mutation'
+  assignValet: { __typename?: 'Booking'; id: number }
+}
+
 export const namedOperations = {
   Query: {
     Companies: 'Companies',
@@ -2478,6 +2494,7 @@ export const namedOperations = {
     RemoveAdmin: 'RemoveAdmin',
     CreateAdmin: 'CreateAdmin',
     CreateValet: 'CreateValet',
+    AssignValet: 'AssignValet',
   },
   Fragment: {
     ValetFields: 'ValetFields',
@@ -5228,3 +5245,73 @@ export const ValetDropsDocument = {
     },
   ],
 } as unknown as DocumentNode<ValetDropsQuery, ValetDropsQueryVariables>
+export const AssignValetDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AssignValet' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'bookingId' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'Float' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'status' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'assignValet' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'bookingId' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'bookingId' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'status' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'status' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AssignValetMutation, AssignValetMutationVariables>
