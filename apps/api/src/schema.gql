@@ -647,7 +647,7 @@ type Query {
   companyValets(distinct: [ValetScalarFieldEnum!], where: ValetWhereInput, orderBy: [ValetOrderByWithRelationInput!], cursor: ValetWhereUniqueInput, take: Float, skip: Float): [Valet!]!
   companyValetsTotal(where: ValetWhereInput): Float!
   valet(where: ValetWhereUniqueInput!): Valet!
-  valetMe: Valet!
+  valetMe: Valet
   valetPickups(take: Float, skip: Float): [Booking!]!
   valetPickupsTotal: Float!
   valetDrops(take: Float, skip: Float): [Booking!]!
@@ -668,6 +668,7 @@ type Query {
   searchGarages(dateFilter: DateFilterInput!, locationFilter: LocationFilterInput!, slotsFilter: SlotWhereInput, garageFilter: GarageFilter): [Garage!]!
   garagesCount(where: GarageWhereInput): AggregateCountOutput!
   bookings(distinct: [BookingScalarFieldEnum!], where: BookingWhereInput, orderBy: [BookingOrderByWithRelationInput!], cursor: BookingWhereUniqueInput, take: Float, skip: Float): [Booking!]!
+  bookingsForValet(distinct: [BookingScalarFieldEnum!], where: BookingWhereInput, orderBy: [BookingOrderByWithRelationInput!], cursor: BookingWhereUniqueInput, take: Float, skip: Float): [Booking!]!
   bookingsForCustomer(distinct: [BookingScalarFieldEnum!], where: BookingWhereInput, orderBy: [BookingOrderByWithRelationInput!], cursor: BookingWhereUniqueInput, take: Float, skip: Float): [Booking!]!
   bookingsForGarage(distinct: [BookingScalarFieldEnum!], where: BookingWhereInput, orderBy: [BookingOrderByWithRelationInput!], cursor: BookingWhereUniqueInput, take: Float, skip: Float, garageId: Float!): [Booking!]!
   bookingsCount(where: BookingWhereInput): AggregateCountOutput!

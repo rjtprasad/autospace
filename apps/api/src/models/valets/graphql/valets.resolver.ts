@@ -73,7 +73,7 @@ export class ValetsResolver {
   }
 
   @AllowAuthenticated()
-  @Query(() => Valet, { name: 'valetMe' })
+  @Query(() => Valet, { name: 'valetMe', nullable: true })
   valetMe(@GetUser() user: GetUserType) {
     return this.valetsService.findOne({ where: { uid: user.uid } })
   }
