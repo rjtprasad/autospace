@@ -1,7 +1,13 @@
+'use client'
+import { IsLoggedIn } from '@autospace/ui/src/components/organisms/IsLoggedIn'
+import { IsValet } from '@autospace/ui/src/components/organisms/IsValet'
+
 export default function Home() {
   return (
     <main>
-      <h3>Hello Valet</h3>
+      <IsLoggedIn>
+        {(uid) => <IsValet uid={uid}>Hello valet.</IsValet>}
+      </IsLoggedIn>
     </main>
   )
 }
