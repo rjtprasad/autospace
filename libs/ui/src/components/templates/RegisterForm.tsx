@@ -82,7 +82,7 @@ export const RegisterForm = ({ className, role }: ISignupFormProps) => {
         </div>
       ) : null}
 
-      <Button type="submit" fullWidth>
+      <Button type="submit" fullWidth loading={loading}>
         Register
       </Button>
 
