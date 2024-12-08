@@ -1,4 +1,4 @@
-import { Dialog, Transition, TransitionChild } from '@headlessui/react'
+import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import { Fragment, ReactNode } from 'react'
 import { IconX } from '@tabler/icons-react'
 
@@ -6,9 +6,10 @@ export interface ISidebarProps {
   open: boolean
   setOpen: (open: boolean) => void
   children: ReactNode
+  blur?: boolean
 }
 
-export const Sidebar = ({ open, setOpen, children }: ISidebarProps) => {
+export const Sidebar = ({ open, setOpen, children, blur=true }: ISidebarProps) => {
   return (
     <Transition show={open} as={Fragment}>
       <Dialog
@@ -16,11 +17,7 @@ export const Sidebar = ({ open, setOpen, children }: ISidebarProps) => {
         className="fixed inset-0 z-50 overflow-hidden"
         onClose={() => setOpen(false)}
       >
-        <div
-          className="absolute inset-0 overflow-hidden  "
-          // onClick={() => setOpen(false)}
-        >
-          <TransitionChild
+          {blur ? <TransitionChild
             as={Fragment}
             enter="transition-opacity ease-linear duration-150"
             enterFrom="opacity-0"
@@ -30,7 +27,7 @@ export const Sidebar = ({ open, setOpen, children }: ISidebarProps) => {
             leaveTo="opacity-0"
           >
             <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
-          </TransitionChild>
+          </TransitionChild> : null}
 
           <div className="fixed inset-y-0 right-0 flex max-w-full bg-white  ">
             <TransitionChild
@@ -42,7 +39,7 @@ export const Sidebar = ({ open, setOpen, children }: ISidebarProps) => {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <div className="flex flex-col w-screen max-w-md p-3">
+              <DialogPanel  className="flex flex-col w-screen max-w-md p-3">
                 <button
                   type="button"
                   className="absolute top-0 right-0 z-10 m-2 ml-auto rounded-full"
@@ -51,10 +48,9 @@ export const Sidebar = ({ open, setOpen, children }: ISidebarProps) => {
                   <IconX className="w-6 h-6 p-1" aria-hidden="true" />
                 </button>
                 {children}
-              </div>
+              </DialogPanel >
             </TransitionChild>
           </div>
-        </div>
       </Dialog>
     </Transition>
   )
