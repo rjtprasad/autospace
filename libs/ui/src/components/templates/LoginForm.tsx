@@ -49,6 +49,7 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
           placeholder="Email"
           {...register('email')}
           autoComplete="on"
+          className="text-black"
         />
       </HtmlLabel>
       <HtmlLabel title="Password" error={errors.password?.message}>
@@ -57,6 +58,7 @@ export const LoginForm = ({ className }: ILoginFormProps) => {
           type="password"
           placeholder="Password"
           autoComplete="current-password"
+          className="text-black"
         />
       </HtmlLabel>
 
