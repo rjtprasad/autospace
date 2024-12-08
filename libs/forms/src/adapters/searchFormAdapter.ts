@@ -32,7 +32,7 @@ export const useConvertSearchFormToVariables = () => {
 
   const formData = watch()
 
-  const debouncedFormData = useDebounce(formData, 400)
+  const [debouncedFormData, { debouncing }] = useDebounce(formData, 300)
 
   useEffect(() => {
     const {
@@ -71,7 +71,7 @@ export const useConvertSearchFormToVariables = () => {
     })
   }, [debouncedFormData])
 
-  return { variables }
+  return { variables, debouncing }
 }
 
 export const createSlotsFilter = (

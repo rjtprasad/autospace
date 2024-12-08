@@ -8,19 +8,25 @@ import { Loader } from '../../molecules/Loader'
 import { IconInfoCircle } from '@tabler/icons-react'
 
 export const ShowGarages = () => {
-  const [searchGarages, { data, loading, error }] = useLazyQuery(
-    SearchGaragesDocument,
-  )
+  const { variables, debouncing } = useConvertSearchFormToVariables()
+  const [searchGarages, { loading: garagesLoading, data, previousData }] =
+    useLazyQuery(SearchGaragesDocument)
 
-  const { variables } = useConvertSearchFormToVariables()
+  console.log(garagesLoading)
 
   useEffect(() => {
     if (variables) {
       searchGarages({ variables })
     }
-  }, [searchGarages, variables])
+  }, [variables])
 
-  if (data?.searchGarages.length === 0) {
+  const garages = data?.searchGarages || previousData?.searchGarages || []
+  const loading = debouncing || garagesLoading
+
+  console.log(garages)
+  console.log(loading)
+
+  if (!loading && garages.length === 0) {
     return (
       <Panel
         position="center-center"
@@ -41,7 +47,7 @@ export const ShowGarages = () => {
         </Panel>
       ) : null}
 
-      {data?.searchGarages.map((garage) => (
+      {garages.map((garage) => (
         <GarageMarker key={garage.id} marker={garage} />
       ))}
     </>
