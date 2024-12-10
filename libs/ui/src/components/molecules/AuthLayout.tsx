@@ -4,6 +4,7 @@ import { RotatingCamera } from '@autospace/3d/src/components/camera/Rotating'
 import { ReactNode } from 'react'
 import { IconArrowBack } from '@tabler/icons-react'
 import { BrandIcon } from '../atoms/BrandIcon'
+import { GoogleButton } from './GoogleButton'
 import Link from 'next/link'
 
 export interface IAuthLayoutProps {
@@ -27,6 +28,10 @@ export const AuthLayout = ({ title, children }: IAuthLayoutProps) => {
             </h1>
             {children}
             <div className="mt-4 text-sm text-gray-300">
+              <div className="flex flex-col items-center mb-4">
+                <div className="mb-1 text-xs">Or, continue with</div>
+                <GoogleButton />
+              </div>
               <Link href="/" className="flex items-center gap-2">
                 <IconArrowBack className="w-4 h-4" /> Back to home
               </Link>
