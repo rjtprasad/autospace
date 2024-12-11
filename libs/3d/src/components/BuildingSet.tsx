@@ -31,6 +31,7 @@ export const BuildingSet = ({
       {BUILDING_SETS[buildingSetIndex].map(({ length, position, width }, i) => (
         <>
           <Building
+            key={`building-${i}`}
             position={
               position.map((pos) => pos * 2) as [number, number, number]
             }
@@ -40,6 +41,7 @@ export const BuildingSet = ({
 
           {/* Add a translucent black plane that is the same size as the parking lot */}
           <mesh
+            key={`mesh-${i}`}
             position={[
               position[0] * 2,
               FLOOR_HEIGHT * (floors[i] - 1), // Adjust the y-position to the top of the building
