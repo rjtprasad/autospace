@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 import { FormTypeSearchGarage } from '../searchGarages'
 import { SearchGaragesQueryVariables } from '@autospace/network/src/gql/generated'
-import { FieldNamesMarkedBoolean, useFormContext } from 'react-hook-form'
+import {
+  FieldNamesMarkedBoolean,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form'
 import { useDebounce } from '@autospace/util/hooks/async'
 import { intFilter } from './util'
 
@@ -26,18 +30,19 @@ export const useConvertSearchFormToVariables = () => {
     useState<SearchGaragesQueryVariables | null>(null)
 
   const {
-    formState: { dirtyFields },
-    watch,
+    formState: { dirtyFields, errors },
   } = useFormContext<FormTypeSearchGarage>()
 
-  const formData = watch()
+  const formData = useWatch<FormTypeSearchGarage>()
 
   const [debouncedFormData, { debouncing }] = useDebounce(formData, 300)
 
+  const hasErrors = Object.keys(errors).length !== 0
+
   useEffect(() => {
     const {
-      endTime,
-      startTime,
+      endTime = '',
+      startTime = '',
       locationFilter,
       length,
       width,
@@ -48,10 +53,16 @@ export const useConvertSearchFormToVariables = () => {
       take,
     } = debouncedFormData
 
+    if (!startTime || !endTime || !locationFilter) {
+      return
+    }
+
     const dateFilter: SearchGaragesQueryVariables['dateFilter'] = {
       start: startTime,
       end: endTime,
     }
+
+    const { ne_lat = 0, ne_lng = 0, sw_lat = 0, sw_lng = 0 } = locationFilter
 
     const slotsFilter = createSlotsFilter(dirtyFields, {
       length,
@@ -65,13 +76,13 @@ export const useConvertSearchFormToVariables = () => {
 
     setVariables({
       dateFilter,
-      locationFilter,
+      locationFilter: { ne_lat, ne_lng, sw_lat, sw_lng },
       ...(Object.keys(slotsFilter).length && { slotsFilter }),
       ...(Object.keys(garagesFilter).length && { garagesFilter }),
     })
   }, [debouncedFormData])
 
-  return { variables, debouncing }
+  return { variables: hasErrors ? null : variables, debouncing }
 }
 
 export const createSlotsFilter = (
