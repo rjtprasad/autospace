@@ -42,10 +42,10 @@ export class StripeController {
     const session =
       await this.stripeService.stripe.checkout.sessions.retrieve(sessionId)
 
-    const { bookingData } = session.metadata
+    const { uid, bookingData } = session.metadata
 
     const bookingInput: CreateBookingInput = JSON.parse(bookingData)
-    await this.bookingService.create(bookingInput)
+    const newBooking = await this.bookingService.create(bookingInput)
     res.redirect(process.env.BOOKINGS_REDIRECT_URL)
   }
 }
