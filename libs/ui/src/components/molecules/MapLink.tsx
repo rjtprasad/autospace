@@ -44,7 +44,12 @@ export const MapLink = ({
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&waypoints=${waypointsParam}`
 
   return (
-    <Link href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
+    <Link
+      href={googleMapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
       {children}
     </Link>
   )

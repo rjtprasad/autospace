@@ -13,6 +13,7 @@ export const Tabs = (props: TabsProps) => {
     />
   )
 }
+
 export const Tab = (props: TabProps) => {
   return (
     <TabMui

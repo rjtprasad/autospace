@@ -7,7 +7,6 @@ export const StaticMapSimple = ({
   position: { lng: number; lat: number }
   className?: string
 }) => {
-  console.log(position)
   if (!position) {
     return <div className="w-full bg-gray-100 shadow-xl aspect-square" />
   }
