@@ -62,8 +62,6 @@ export const BookSlotPopup = ({
     <div className="flex gap-2 text-left border-t-2 border-white bg-white/50 backdrop-blur-sm">
       <Form
         onSubmit={handleSubmit(async (data) => {
-          console.log('formData: ', data)
-
           if (!uid) {
             alert('You are not logged in.')
             return

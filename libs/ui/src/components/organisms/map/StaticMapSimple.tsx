@@ -14,8 +14,6 @@ export const StaticMapSimple = ({
   // const url = `https://api.mapbox.com/styles/v1/duded5314/cm2q94lzz000p01qrgva6acwl/static/pin-s(${position.lng},${position.lat})/${position.lng},${position.lat},9,0/600x600?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`
   const url = `https://api.mapbox.com/styles/v1/mapbox/light-v11/static/pin-s+555555(${position.lng},${position.lat})/${position.lng},${position.lat},9,0/600x600?access_token=${process.env.NEXT_PUBLIC_MAPBOX_TOKEN}`
 
-  console.log(url)
-
   return (
     <Image
       src={url}

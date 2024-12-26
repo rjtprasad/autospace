@@ -32,6 +32,7 @@ export const CustomerBookingCard = ({ booking }: IBookingCardProps) => {
           />
         </MapLink>
       </div>
+
       <div className="grid grid-cols-2 w-full gap-2 mt-2  ">
         <TitleStrongValue title={'Slot'}>
           {booking.slot.displayName}
