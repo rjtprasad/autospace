@@ -22,12 +22,18 @@ export const ShowCustomerBookings = ({
       skip,
       take,
       where: {
+        customerId: { equals: uid },
         status: {
           in: statuses,
         },
       },
     },
   })
+
+  console.log(uid)
+  console.log(loading)
+  console.log(data)
+  console.log(error)
 
   return (
     <ShowData
