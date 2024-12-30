@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 }
 
 const MENUITEMS: MenuItem[] = [
-  { label: 'New Garage', href: '/createGarage' },
+  { label: 'Garages', href: '/' },
+  { label: 'Create Garage', href: '/new-garage' },
   { label: 'Valets', href: '/valets' },
 ]
 
