@@ -10,6 +10,8 @@ export interface IListBookingsProps {
 export const ListGarageBookings = ({ garageId }: IListBookingsProps) => {
   const [value, setValue] = useState<0 | 1 | 2>(0)
 
+  console.log(garageId)
+
   return (
     <div>
       <Tabs

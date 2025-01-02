@@ -43,6 +43,10 @@ export const ShowGarageBookings = ({
     },
   })
 
+  console.log(data)
+  console.log(showCheckIn)
+  console.log(showCheckOut)
+
   return (
     <div className="mt-4">
       <div className="flex justify-center">

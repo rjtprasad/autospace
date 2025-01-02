@@ -218,6 +218,31 @@ fragment BookingFields on Booking {
   }
 }
 
+
+query BookingsForCustomer(
+  $skip: Float
+  $take: Float
+  $cursor: BookingWhereUniqueInput
+  $orderBy: [BookingOrderByWithRelationInput!]
+  $where: BookingWhereInput
+  $distinct: [BookingScalarFieldEnum!]
+) {
+  bookingsForCustomer(
+    skip: $skip
+    take: $take
+    cursor: $cursor
+    orderBy: $orderBy
+    where: $where
+    distinct: $distinct
+  ) {
+    ...BookingFields
+  }
+
+  bookingsCount(where: $where) {
+    count
+  }
+}
+
 query BookingsForGarage(
   $garageId: Float!
   $skip: Float
@@ -258,116 +283,17 @@ mutation createBookingTimeline(
   }
 }
 
-query BookingsForCustomer(
-  $skip: Float
-  $take: Float
-  $cursor: BookingWhereUniqueInput
-  $orderBy: [BookingOrderByWithRelationInput!]
-  $where: BookingWhereInput
-  $distinct: [BookingScalarFieldEnum!]
-) {
-  bookingsForCustomer(
-    skip: $skip
-    take: $take
-    cursor: $cursor
-    orderBy: $orderBy
-    where: $where
-    distinct: $distinct
-  ) {
-    ...BookingFields
-  }
-
-  bookingsCount(where: $where) {
-    count
-  }
-}
-
-
-query AdminMe {
-  adminMe {
-    uid
-  }
-}
-
-
-mutation RemoveVerification($where: VerificationWhereUniqueInput!) {
-  removeVerification(where: $where) {
-    adminId
-    createdAt
-    garageId
-    updatedAt
-    verified
-  }
-}
-
-
-mutation CreateVerification(
-  $createVerificationInput: CreateVerificationInput!
-) {
-  createVerification(createVerificationInput: $createVerificationInput) {
-    adminId
-    createdAt
-    garageId
-    updatedAt
-    verified
-  }
-}
-
-
-query admins(
-  $distinct: [AdminScalarFieldEnum!]
-  $skip: Float
-  $take: Float
-  $cursor: AdminWhereUniqueInput
-  $orderBy: [AdminOrderByWithRelationInput!]
-  $where: AdminWhereInput
-) {
-  admins(
-    distinct: $distinct
-    skip: $skip
-    take: $take
-    cursor: $cursor
-    orderBy: $orderBy
-    where: $where
-  ) {
-    uid
-    updatedAt
-    user {
-      name
-    }
-    createdAt
-    verificationsCount
-  }
-  adminsCount(where: $where)
-}
-
-mutation RemoveAdmin($where: AdminWhereUniqueInput!) {
-  removeAdmin(where: $where) {
-    createdAt
-    user {
-      name
-    }
-    updatedAt
-    uid
-  }
-}
-
-mutation CreateAdmin($createAdminInput: CreateAdminInput!) {
-  createAdmin(createAdminInput: $createAdminInput) {
-    createdAt
-    user {
-      name
-    }
-    uid
-    updatedAt
-  }
-}
-
 
 query ValetMe {
   valetMe {
     uid
     companyId
+  }
+}
+
+query AdminMe {
+  adminMe {
+    uid
   }
 }
 
@@ -527,5 +453,78 @@ query myDropTrips(
   }
   bookingsCount(where: $where) {
     count
+  }
+}
+
+mutation CreateVerification(
+  $createVerificationInput: CreateVerificationInput!
+) {
+  createVerification(createVerificationInput: $createVerificationInput) {
+    adminId
+    createdAt
+    garageId
+    updatedAt
+    verified
+  }
+}
+
+mutation RemoveVerification($where: VerificationWhereUniqueInput!) {
+  removeVerification(where: $where) {
+    adminId
+    createdAt
+    garageId
+    updatedAt
+    verified
+  }
+}
+
+
+
+query admins(
+  $distinct: [AdminScalarFieldEnum!]
+  $skip: Float
+  $take: Float
+  $cursor: AdminWhereUniqueInput
+  $orderBy: [AdminOrderByWithRelationInput!]
+  $where: AdminWhereInput
+) {
+  admins(
+    distinct: $distinct
+    skip: $skip
+    take: $take
+    cursor: $cursor
+    orderBy: $orderBy
+    where: $where
+  ) {
+    uid
+    updatedAt
+    user {
+      name
+    }
+    createdAt
+    verificationsCount
+  }
+  adminsCount(where: $where)
+}
+
+mutation RemoveAdmin($where: AdminWhereUniqueInput!) {
+  removeAdmin(where: $where) {
+    createdAt
+    user {
+      name
+    }
+    updatedAt
+    uid
+  }
+}
+
+mutation CreateAdmin($createAdminInput: CreateAdminInput!) {
+  createAdmin(createAdminInput: $createAdminInput) {
+    createdAt
+    user {
+      name
+    }
+    uid
+    updatedAt
   }
 }

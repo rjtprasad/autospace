@@ -76,18 +76,14 @@ export class BookingsResolver {
     })
   }
 
-  @AllowAuthenticated('admin', 'manager')
+  @AllowAuthenticated('manager', 'admin')
   @Query(() => [Booking], { name: 'bookingsForGarage' })
   async bookingsForGarage(
     @Args()
     { cursor, distinct, orderBy, skip, take, where }: FindManyBookingArgs,
+    @Args('garageId') garageId: number,
     @GetUser() user: GetUserType,
   ) {
-    const garageId = where.Slot.is.garageId.equals
-    if (!garageId) {
-      throw new BadRequestException('Pass garage id in where.Slot.is.garageId')
-    }
-
     const garage = await this.prisma.garage.findUnique({
       where: { id: garageId },
       include: { Company: { include: { Managers: true } } },
