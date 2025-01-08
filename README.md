@@ -1,4 +1,5 @@
 # AutoSpace Parking Application
+![autospace_banner]([images/example.png](https://res.cloudinary.com/dnsk11q7u/image/upload/v1736314816/zg4dwa7y8tcrk6yof2jr.gif))
 <img src="https://res.cloudinary.com/dnsk11q7u/image/upload/v1736314816/zg4dwa7y8tcrk6yof2jr.gif" alt="autospace_banner"/>
 
 AutoSpace is comprehensive solution for managing parking, with features for both customers and parking facility managers, as well as a way for valets to manage their assignments.
